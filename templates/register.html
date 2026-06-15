@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+<section class="form-panel shadow-lg">
+    <div class="section-heading mb-4">
+        <span class="section-kicker">Account</span>
+        <h1>Register</h1>
+        <p>Create a user profile.</p>
+    </div>
+
+    {% for errors in form.errors.values() %}
+    <div class="alert alert-danger">
+        {% for error in errors %}
+            {{ error }}
+        {% endfor %}
+    </div>
+    {% endfor %}
+
+    <form method="POST" enctype="multipart/form-data" class="stacked-form">
+        {{ form.hidden_tag() }}
+        <div>
+            <label class="form-label fw-bold">Profile photo optional</label>
+            {{ form.image(class="form-control", accept=".png, .jpg, .jpeg") }}
+        </div>
+        <div class="row g-3">
+            <div class="col-md-12">
+                {{ form.username(class="form-control form-control-lg", placeholder=form.username.label.text) }}
+            </div>
+            <div class="col-md-6">
+                {{ form.password(class="form-control form-control-lg", placeholder=form.password.label.text) }}
+            </div>
+            <div class="col-md-6">
+                {{ form.confirm_password(class="form-control form-control-lg", placeholder=form.confirm_password.label.text) }}
+            </div>
+            <div class="col-md-6">
+                {{ form.birthdate(class="form-control form-control-lg") }}
+            </div>
+            <div class="col-md-6">
+                {{ form.country(class="form-select form-select-lg") }}
+            </div>
+        </div>
+
+        {{ form.register(class="btn uiverse-button form-submit") }}
+    </form>
+</section>
+{% endblock %}

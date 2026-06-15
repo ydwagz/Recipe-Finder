@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %} {{ movie.title }} {% endblock %}
+
+{% block content %}
+<a href="/" class="nav-link"> ⬅️ back</a>
+<h1>Details about {{ movie.title }}</h1>
+<hr>
+<div class="row">
+    <div class="col">
+        <div class="card" style="width: 18rem;">
+            <img src="/static/images/{{ movie.image }}" class="card-img-top" alt="Movie Poster Image">
+            <div class="card-body">
+                <h5 class="card-title">{{ movie.title }}</h5>
+                <p class="card-text">{{ movie.release_year }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <h3>Movie Reviews</h3>
+        {% for review in reviews %}
+        <p>{{ review.text }}</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+

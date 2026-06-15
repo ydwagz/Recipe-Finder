@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Save Recipe{% endblock %}
+
+{% block content %}
+<section class="form-panel shadow-lg">
+    <div class="section-heading mb-4">
+        <span class="section-kicker">User recipe</span>
+        <h1>Save a recipe</h1>
+        <p>Add a user recipe with its ingredients.</p>
+    </div>
+
+    {% for errors in form.errors.values() %}
+    <div class="alert alert-danger">
+        {% for error in errors %}
+            {{ error }}
+        {% endfor %}
+    </div>
+    {% endfor %}
+
+    <form method="POST" enctype="multipart/form-data" class="stacked-form">
+        {{ form.hidden_tag() }}
+        <div>
+            <label class="form-label fw-bold">Recipe photo</label>
+            {{ form.image(class="form-control", accept=".png, .jpg, .jpeg") }}
+        </div>
+        {{ form.title(class="form-control form-control-lg", placeholder=form.title.label.text) }}
+        {{ form.ingredients(class="form-control form-control-lg", placeholder=form.ingredients.label.text) }}
+
+        <div class="control-card">
+            <label class="uiverse-check">
+                <input type="checkbox" checked>
+                <span class="check-box"></span>
+                <span>Use these ingredients in search results</span>
+            </label>
+        </div>
+
+        {{ form.submit(class="btn uiverse-button form-submit") }}
+    </form>
+</section>
+{% endblock %}

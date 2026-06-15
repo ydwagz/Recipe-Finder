@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<section class="form-panel shadow-lg">
+    <div class="section-heading mb-4">
+        <span class="section-kicker">Account</span>
+        <h1>Login</h1>
+        <p>Enter the same username and password you used when registering.</p>
+    </div>
+
+    {% if error %}
+    <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+
+    {% for errors in form.errors.values() %}
+    <div class="alert alert-danger">
+        {% for error in errors %}
+            {{ error }}
+        {% endfor %}
+    </div>
+    {% endfor %}
+
+    <form method="POST" class="stacked-form">
+        {{ form.hidden_tag() }}
+        {{ form.username(class="form-control form-control-lg", placeholder=form.username.label.text) }}
+        {{ form.password(class="form-control form-control-lg", placeholder=form.password.label.text) }}
+        {{ form.submit(class="btn uiverse-button form-submit") }}
+    </form>
+</section>
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ recipe.title }}{% endblock %}
+
+{% block content %}
+<a href="/" class="btn uiverse-secondary mb-3">Back to recipes</a>
+
+<section class="row g-4 align-items-start">
+    <div class="col-lg-7">
+        <article class="card recipe-card detail-card shadow-lg">
+            {% if recipe.image %}
+            <img src="/static/images/{{ recipe.image }}" class="card-img-top" alt="{{ recipe.title }}">
+            {% else %}
+            <div class="recipe-art">RF</div>
+            {% endif %}
+            <div class="card-body">
+                <span class="section-kicker">Recipe details</span>
+                <h1>{{ recipe.title }}</h1>
+                <p class="muted-copy">{{ recipe.ingredients }}</p>
+                <div class="detail-actions">
+                    <button class="btn uiverse-button btn-sm" type="button" onclick="window.print()">Print recipe</button>
+                    <button class="btn uiverse-secondary btn-sm copy-ingredients" type="button" data-ingredients="{{ recipe.ingredients }}">Copy ingredients</button>
+                </div>
+            </div>
+        </article>
+    </div>
+
+    <div class="col-lg-5">
+        <div class="review-panel shadow-sm">
+            <ul class="nav nav-pills recipe-tabs mb-3" id="recipeDetailTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="reviews-tab" data-bs-toggle="pill" data-bs-target="#reviews-pane" type="button" role="tab" aria-controls="reviews-pane" aria-selected="true">Reviews</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="plan-tab" data-bs-toggle="pill" data-bs-target="#plan-pane" type="button" role="tab" aria-controls="plan-pane" aria-selected="false">Cook plan</button>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="reviews-pane" role="tabpanel" aria-labelledby="reviews-tab" tabindex="0">
+                    <span class="section-kicker">Reviews</span>
+                    <h2>Recipe reviews</h2>
+                    {% if reviews %}
+                        {% for review in reviews %}
+                        <p>{{ review.text }}</p>
+                        {% endfor %}
+                    {% else %}
+                    <p>No reviews yet.</p>
+                    {% endif %}
+                </div>
+                <div class="tab-pane fade" id="plan-pane" role="tabpanel" aria-labelledby="plan-tab" tabindex="0">
+                    <span class="section-kicker">Royal shortcut</span>
+                    <h2>Quick cook plan</h2>
+                    <ol class="cook-plan">
+                        <li>Chop and group the ingredients before heating the pan.</li>
+                        <li>Cook the firm ingredients first, then add anything soft or fresh.</li>
+                        <li>Finish with seasoning and serve while warm.</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="kitchenToast" class="toast kitchen-toast" role="status" aria-live="polite" aria-atomic="true">
+        <div class="toast-body">Recipe action saved.</div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% block title %}Recipe Finder{% endblock %}
+
+{% block content %}
+<section class="hero-panel shadow-lg">
+    <div class="hero-spark"></div>
+    <div class="row align-items-center g-4">
+        <div class="col-lg-6">
+            <span class="badge rounded-pill text-bg-success mb-3">Cook with what you have</span>
+            <h1>Make a half empty fridge feel royal.</h1>
+            <p class="hero-copy">Drop in a few ingredients and Recipe Finder will help you find matching saved recipes.</p>
+            <div class="hero-stats" aria-label="Recipe Finder highlights">
+                <div>
+                    <strong>Fast</strong>
+                    <span>recipe search</span>
+                </div>
+                <div>
+                    <strong>15m</strong>
+                    <span>quick cook goal</span>
+                </div>
+                <div>
+                    <strong>0</strong>
+                    <span>wasted leftovers</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <form class="search-card" method="GET" action="/" id="recipeSearchForm">
+                <label class="form-label fw-bold" for="ingredients">Ingredients</label>
+                <div class="input-group input-group-lg">
+                    <input
+                        id="ingredients"
+                        class="form-control"
+                        name="ingredients"
+                        value="{{ ingredients_text }}"
+                        placeholder="egg bread cheese tomato"
+                        aria-label="Recipe ingredients"
+                    >
+                    <button class="btn uiverse-button search-submit" type="submit">
+                        <span class="button-label">Search</span>
+                        <span class="button-loader" aria-hidden="true"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+{% if current_profile %}
+<section class="profile-summary shadow-sm">
+    <div>
+        <span class="section-kicker">Logged in</span>
+        <h2>{{ current_profile["username"] }}</h2>
+        <p class="muted-copy mb-0">Your profile is active. You can add recipes and search your saved collection from this page.</p>
+    </div>
+    {% if current_profile["img"] %}
+    <img class="profile-image" src="/static/images/{{ current_profile['img'] }}" alt="{{ current_profile['username'] }}">
+    {% endif %}
+</section>
+{% endif %}
+
+<section class="section-block" id="savedRecipes">
+    <div class="d-flex flex-wrap align-items-end justify-content-between gap-3 mb-3">
+        <div>
+            <span class="section-kicker">User collection</span>
+            <h2>Saved recipes</h2>
+            <p class="muted-copy">Recipes added by users are listed here.</p>
+        </div>
+        <a class="btn uiverse-secondary" href="/add_recipe">Add Recipe</a>
+    </div>
+
+    {% if recipes %}
+    <div class="row g-4 recipe-grid">
+        {% for recipe in recipes %}
+        <div class="col-md-6 col-xl-4">
+            <div class="card recipe-card h-100">
+                {% if recipe.image %}
+                <img src="/static/images/{{ recipe.image }}" class="card-img-top" alt="{{ recipe.title }}">
+                {% else %}
+                <div class="recipe-art">RF</div>
+                {% endif %}
+                <div class="card-body">
+                    <h3 class="card-title">{{ recipe.title }}</h3>
+                    <p class="card-text">{{ recipe.ingredients }}</p>
+                </div>
+                <div class="card-footer bg-white border-0 d-flex flex-wrap gap-2">
+                    <a class="btn uiverse-button btn-sm" href="/recipe/{{ recipe.id }}">Details</a>
+                    {% if role == "admin" %}
+                    <a class="btn uiverse-danger btn-sm" href="/delete_recipe/{{ recipe.id }}">Delete</a>
+                    <a class="btn uiverse-secondary btn-sm" href="/update_recipe/{{ recipe.id }}">Update</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state shadow-sm">
+        <h3>No saved recipes yet</h3>
+        <p>Add a recipe or search ingredients like egg, bread, or cheese.</p>
+    </div>
+    {% endif %}
+</section>
+{% endblock %}
