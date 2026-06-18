@@ -1,7 +1,7 @@
 # 🍳 Recipe Finder
 
 
-<img src="../static/images/QR_code.png">
+<img src="/static/images/QR_code.png" alt="Recipe Finder QR code">
 
 Recipe Finder is a simple and user-friendly web application that helps users discover delicious recipes based on ingredients, meal types, or keywords. Whether you're looking for a quick snack, a healthy dinner, or a dessert, Recipe Finder makes it easy to find the perfect recipe.
 
