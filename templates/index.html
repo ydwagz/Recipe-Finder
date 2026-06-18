@@ -27,23 +27,33 @@
         </div>
 
         <div class="col-lg-6">
-            <form class="search-card" method="GET" action="/" id="recipeSearchForm">
-                <label class="form-label fw-bold" for="ingredients">Ingredients</label>
-                <div class="input-group input-group-lg">
-                    <input
-                        id="ingredients"
-                        class="form-control"
-                        name="ingredients"
-                        value="{{ ingredients_text }}"
-                        placeholder="egg bread cheese tomato"
-                        aria-label="Recipe ingredients"
-                    >
-                    <button class="btn uiverse-button search-submit" type="submit">
-                        <span class="button-label">Search</span>
-                        <span class="button-loader" aria-hidden="true"></span>
-                    </button>
-                </div>
-            </form>
+            <div class="hero-tools">
+                <form class="search-card" method="GET" action="/" id="recipeSearchForm">
+                    <label class="form-label fw-bold" for="ingredients">Ingredients</label>
+                    <div class="input-group input-group-lg">
+                        <input
+                            id="ingredients"
+                            class="form-control"
+                            name="ingredients"
+                            value="{{ ingredients_text }}"
+                            placeholder="egg bread cheese tomato"
+                            aria-label="Recipe ingredients"
+                        >
+                        <button class="btn uiverse-button search-submit" type="submit">
+                            <span class="button-label">Search</span>
+                            <span class="button-loader" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                </form>
+                <aside class="hero-qr-card" aria-label="Recipe Finder QR code">
+                    <img src="/static/images/QR_code.png" alt="Recipe Finder QR code">
+                    <div>
+                        <span class="section-kicker">Mobile access</span>
+                        <h2>Scan Recipe Finder</h2>
+                        <p>Open this recipe collection quickly on another device.</p>
+                    </div>
+                </aside>
+            </div>
         </div>
     </div>
 </section>
@@ -52,11 +62,11 @@
 <section class="profile-summary shadow-sm">
     <div>
         <span class="section-kicker">Logged in</span>
-        <h2>{{ current_profile["username"] }}</h2>
+        <h2>{{ current_profile.username }}</h2>
         <p class="muted-copy mb-0">Your profile is active. You can add recipes and search your saved collection from this page.</p>
     </div>
-    {% if current_profile["img"] %}
-    <img class="profile-image" src="/static/images/{{ current_profile['img'] }}" alt="{{ current_profile['username'] }}">
+    {% if current_profile.image %}
+    <img class="profile-image" src="/static/images/{{ current_profile.image }}" alt="{{ current_profile.username }}">
     {% endif %}
 </section>
 {% endif %}
@@ -68,7 +78,11 @@
             <h2>Saved recipes</h2>
             <p class="muted-copy">Recipes added by users are listed here.</p>
         </div>
+        {% if current_profile %}
         <a class="btn uiverse-secondary" href="/add_recipe">Add Recipe</a>
+        {% else %}
+        <a class="btn uiverse-secondary" href="/login">Log in to add recipes</a>
+        {% endif %}
     </div>
 
     {% if recipes %}
@@ -87,7 +101,7 @@
                 </div>
                 <div class="card-footer bg-white border-0 d-flex flex-wrap gap-2">
                     <a class="btn uiverse-button btn-sm" href="/recipe/{{ recipe.id }}">Details</a>
-                    {% if role == "admin" %}
+                    {% if current_profile and (current_profile.is_admin or recipe.user_id == current_profile.id) %}
                     <a class="btn uiverse-danger btn-sm" href="/delete_recipe/{{ recipe.id }}">Delete</a>
                     <a class="btn uiverse-secondary btn-sm" href="/update_recipe/{{ recipe.id }}">Update</a>
                     {% endif %}

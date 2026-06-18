@@ -17,9 +17,14 @@
                 <span class="section-kicker">Recipe details</span>
                 <h1>{{ recipe.title }}</h1>
                 <p class="muted-copy">{{ recipe.ingredients }}</p>
+                <h2 class="h4 mt-4">How to make it</h2>
+                <p class="recipe-details-text">{{ recipe.details }}</p>
                 <div class="detail-actions">
-                    <button class="btn uiverse-button btn-sm" type="button" onclick="window.print()">Print recipe</button>
                     <button class="btn uiverse-secondary btn-sm copy-ingredients" type="button" data-ingredients="{{ recipe.ingredients }}">Copy ingredients</button>
+                    {% if current_profile and (current_profile.is_admin or recipe.user_id == current_profile.id) %}
+                    <a class="btn uiverse-secondary btn-sm" href="/update_recipe/{{ recipe.id }}">Update</a>
+                    <a class="btn uiverse-danger btn-sm" href="/delete_recipe/{{ recipe.id }}">Delete</a>
+                    {% endif %}
                 </div>
             </div>
         </article>
@@ -32,7 +37,7 @@
                     <button class="nav-link active" id="reviews-tab" data-bs-toggle="pill" data-bs-target="#reviews-pane" type="button" role="tab" aria-controls="reviews-pane" aria-selected="true">Reviews</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="plan-tab" data-bs-toggle="pill" data-bs-target="#plan-pane" type="button" role="tab" aria-controls="plan-pane" aria-selected="false">Cook plan</button>
+                    <button class="nav-link" id="owner-tab" data-bs-toggle="pill" data-bs-target="#owner-pane" type="button" role="tab" aria-controls="owner-pane" aria-selected="false">Owner</button>
                 </li>
             </ul>
             <div class="tab-content">
@@ -47,14 +52,10 @@
                     <p>No reviews yet.</p>
                     {% endif %}
                 </div>
-                <div class="tab-pane fade" id="plan-pane" role="tabpanel" aria-labelledby="plan-tab" tabindex="0">
-                    <span class="section-kicker">Royal shortcut</span>
-                    <h2>Quick cook plan</h2>
-                    <ol class="cook-plan">
-                        <li>Chop and group the ingredients before heating the pan.</li>
-                        <li>Cook the firm ingredients first, then add anything soft or fresh.</li>
-                        <li>Finish with seasoning and serve while warm.</li>
-                    </ol>
+                <div class="tab-pane fade" id="owner-pane" role="tabpanel" aria-labelledby="owner-tab" tabindex="0">
+                    <span class="section-kicker">Uploaded by</span>
+                    <h2>{% if recipe.user %}{{ recipe.user.username }}{% else %}Unknown user{% endif %}</h2>
+                    <p>Only this user or an admin can change or delete this recipe.</p>
                 </div>
             </div>
         </div>

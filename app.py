@@ -3,7 +3,7 @@ from routes import *
 
 
 with app.app_context():
-    db.create_all()
+    ensure_database_schema()
 
 
 if __name__ == "__main__":

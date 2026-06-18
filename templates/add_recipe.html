@@ -26,14 +26,7 @@
         </div>
         {{ form.title(class="form-control form-control-lg", placeholder=form.title.label.text) }}
         {{ form.ingredients(class="form-control form-control-lg", placeholder=form.ingredients.label.text) }}
-
-        <div class="control-card">
-            <label class="uiverse-check">
-                <input type="checkbox" checked>
-                <span class="check-box"></span>
-                <span>Use these ingredients in search results</span>
-            </label>
-        </div>
+        {{ form.details(class="form-control form-control-lg", rows="7", placeholder=form.details.label.text) }}
 
         {{ form.submit(class="btn uiverse-button form-submit") }}
     </form>

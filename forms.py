@@ -5,6 +5,7 @@ from wtforms.fields import (
     SelectField,
     StringField,
     SubmitField,
+    TextAreaField,
 )
 from wtforms.validators import DataRequired, equal_to, length
 from flask_wtf.file import FileAllowed, FileField, FileSize
@@ -42,5 +43,6 @@ class RecipeForm(FlaskForm):
     image = FileField("Upload recipe photo")
     title = StringField("Enter Recipe Title", validators=[DataRequired()])
     ingredients = StringField("Enter Recipe Ingredients", validators=[DataRequired()])
+    details = TextAreaField("Details / how to make it", validators=[DataRequired()])
 
     submit = SubmitField("Save Recipe")

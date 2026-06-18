@@ -1,5 +1,5 @@
 from ext import app, db
-from models import Recipe, Review
+from routes import ensure_database_schema
 
 with app.app_context():
-    db.create_all()
+    ensure_database_schema()

@@ -3,9 +3,18 @@
 {% block title %}About Recipe Finder{% endblock %}
 
 {% block content %}
-<section class="form-panel shadow-lg">
-    <span class="section-kicker">About</span>
-    <h1>Recipe Finder</h1>
-    <p>Type ingredients into the search bar and the website will show made-up recipes that include the ingredient text you entered.</p>
+<section class="about-panel shadow-lg">
+    <div class="about-copy">
+        <span class="section-kicker">About</span>
+        <h1>Recipe Finder</h1>
+        <p>Recipe Finder is a simple place to save recipes, search them by ingredients, and keep cooking ideas easy to find later.</p>
+        <p>Users can create an account, upload recipes with photos, list ingredients, and write the full cooking details. Each recipe stays connected to the person who uploaded it, so only that user or an admin can edit or remove it.</p>
+        <p>The search bar is built for real kitchen moments: type what you already have, like eggs, bread, cheese, rice, or tomatoes, and the site will show matching saved recipes from the collection.</p>
+    </div>
+    <div class="about-qr-card">
+        <img src="/static/images/QR_code.png" alt="Recipe Finder QR code">
+        <h2>Scan to Open</h2>
+        <p>Use this QR code to open Recipe Finder quickly from a phone or tablet.</p>
+    </div>
 </section>
 {% endblock %}
